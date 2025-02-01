@@ -1,19 +1,32 @@
+import os
+import logging
+from flask import Flask, request
 from telegram import Update, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import (
     ApplicationBuilder,
     CommandHandler,
     CallbackQueryHandler,
     MessageHandler,
-    filters,
     ContextTypes,
+    filters,
 )
-import os
-from dotenv import load_dotenv
 
 # Load environment variables
+from dotenv import load_dotenv
 load_dotenv()
 BOT_TOKEN = os.getenv("bot_token")
 
+# Initialize Flask app
+app = Flask(__name__)
+
+# Initialize Telegram bot application
+bot_app = ApplicationBuilder().token(BOT_TOKEN).build()
+
+# Webhook URL (Replace YOUR_RENDER_URL with actual Render URL)
+WEBHOOK_URL = f"https://YOUR_RENDER_URL.onrender.com/webhook"
+
+# Enable logging
+logging.basicConfig(level=logging.INFO)
 
 # Function to handle the /start command
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -34,15 +47,15 @@ Migration Sniping, Copy-trading, Limit Orders & a lot more.
 🚀 Let's get started!
 """
 
-    # Create inline keyboard buttons
-    keyboard = [[InlineKeyboardButton("Join Queue", callback_data='button1')],
-                [InlineKeyboardButton("Enter Access Code", callback_data='button2')]]
+    keyboard = [
+        [InlineKeyboardButton("Join Queue", callback_data='button1')],
+        [InlineKeyboardButton("Enter Access Code", callback_data='button2')]
+    ]
     reply_markup = InlineKeyboardMarkup(keyboard)
 
-    # Send initial greeting message with buttons
     await context.bot.send_message(chat_id, welcome_msg, reply_markup=reply_markup)
 
-
+# Callback for button presses
 async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
@@ -52,13 +65,11 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await context.bot.send_message(chat_id, "Please enter your access or referral code.")
         context.user_data["awaiting_code"] = True
 
-
+# Handle user access code input
 async def handle_access_code(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if context.user_data.get("awaiting_code"):
         chat_id = update.effective_chat.id
         access_code = update.message.text.strip()
-        keyboard = [[InlineKeyboardButton("Continue", callback_data='button3')]]
-        reply_markup = InlineKeyboardMarkup(keyboard)
 
         if access_code == "Bullish":
             confirmation_msg = """
@@ -70,30 +81,34 @@ Welcome to Nova — the Fastest All-In-One Trading Platform. Effortlessly trade 
 
 Don't forget to join our Support channel and explore the guide below for a smooth start:
 
-👉 <a href="https://t.me/TradeonNova">Join Support</a>
-👉 <a href="https://docs.tradeonnova.io/">Nova Guide</a>
-👉 <a href="https://www.youtube.com/@TradeonNova">YouTube</a>
+👉 [Join Support](https://t.me/TradeonNova)
+👉 Nova Guide
+👉 YouTube
 
 💡 Ready to begin? Press Continue below to start using Nova.
 """
-            await context.bot.send_message(chat_id, confirmation_msg, parse_mode="HTML", reply_markup=reply_markup)
+            await context.bot.send_message(chat_id, confirmation_msg, parse_mode="Markdown")
         else:
             await context.bot.send_message(chat_id, "❌ Invalid access code. Please try again.")
-            context.user_data["awaiting_code"] = True
 
+        context.user_data["awaiting_code"] = False
 
-# Main function to run the bot
-def main():
-    bot_token = BOT_TOKEN
+# Flask route to handle Telegram webhook updates
+@app.route('/webhook', methods=['POST'])
+async def webhook():
+    update = Update.de_json(request.get_json(force=True), bot_app.bot)  # Fix: Removed await
+    await bot_app.process_update(update)
+    return "OK", 200
 
-    # Create the bot application
-    app = ApplicationBuilder().token(bot_token).build()
+# Function to set the Telegram webhook
+async def set_webhook():
+    bot = bot_app.bot  # ✅ FIXED: No need to await in v21+
+    await bot.set_webhook(WEBHOOK_URL)
 
-    # Add handlers
-    app.add_handler(CommandHandler("start", start))
-    app.add_handler(CallbackQueryHandler(button_callback))
-    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_access_code))
+if __name__ == "__main__":
+    import asyncio
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(set_webhook())
 
-    # Run the bot
-    print("Bot is running...")
-    app.run_polling()
+    # Start Flask app
+    app.run(host="0.0.0.0", port=10000)
