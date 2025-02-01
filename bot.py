@@ -23,7 +23,7 @@ app = Flask(__name__)
 bot_app = ApplicationBuilder().token(BOT_TOKEN).build()
 
 # Webhook URL (Replace YOUR_RENDER_URL with actual Render URL)
-WEBHOOK_URL = f"https://YOUR_RENDER_URL.onrender.com/webhook"
+WEBHOOK_URL = f"https://nova-bot-0rvq.onrender.com/webhook"
 
 # Enable logging
 logging.basicConfig(level=logging.INFO)
