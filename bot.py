@@ -101,15 +101,16 @@ def home():
 
 
 @app.route('/webhook', methods=['POST'])
-def webhook():
+async def webhook():
+    print("Webhook called")
     update = Update.de_json(request.get_json(force=True), bot_app.bot)
 
     # ✅ Explicitly initialize the bot
     if not bot_app.running:
-        bot_app.initialize()
+        await bot_app.initialize()
 
-    # ✅ Ensure the async function runs correctly in a sync context
-    asyncio.run(bot_app.process_update(update))
+    # ✅ Run process_update as an async task
+    await bot_app.process_update(update)
 
     return "OK", 200
 
