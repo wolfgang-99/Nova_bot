@@ -98,11 +98,19 @@ Don't forget to join our Support channel and explore the guide below for a smoot
 def home():
     return "Bot is running!"
 
+
 @app.route('/webhook', methods=['POST'])
-async def webhook():
-    update = Update.de_json(request.get_json(force=True), bot_app.bot)  # Fix: Removed await
-    await bot_app.process_update(update)
+def webhook():
+    update = Update.de_json(request.get_json(force=True), bot_app.bot)
+
+    # ✅ Explicitly initialize the bot
+    if not bot_app.running:
+        bot_app.initialize()
+
+    bot_app.create_task(bot_app.process_update(update))
+
     return "OK", 200
+
 
 # Function to set the Telegram webhook
 async def set_webhook():
