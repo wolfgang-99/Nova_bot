@@ -83,7 +83,7 @@ Don't forget to join our Support channel and explore the guide below for a smoot
 
 
 # Main function to run the bot
-if __name__ == "__main__":
+def main():
     bot_token = BOT_TOKEN
 
     # Create the bot application
