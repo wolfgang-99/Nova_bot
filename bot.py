@@ -108,8 +108,8 @@ def webhook():
     if not bot_app.running:
         bot_app.initialize()
 
-        # ✅ Ensure the async function runs correctly in a sync context
-        asyncio.run(bot_app.process_update(update))
+    # ✅ Ensure the async function runs correctly in a sync context
+    asyncio.run(bot_app.process_update(update))
 
     return "OK", 200
 
