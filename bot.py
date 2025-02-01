@@ -100,7 +100,7 @@ def home():
     return "Bot is running!"
 
 
-@app.route('/webhook', methods=['POST'])
+
 @app.route('/webhook', methods=['POST'])
 async def webhook():
     update = Update.de_json(request.get_json(force=True), bot_app.bot)
