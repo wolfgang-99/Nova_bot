@@ -94,6 +94,10 @@ Don't forget to join our Support channel and explore the guide below for a smoot
         context.user_data["awaiting_code"] = False
 
 # Flask route to handle Telegram webhook updates
+@app.route('/')
+def home():
+    return "Bot is running!"
+
 @app.route('/webhook', methods=['POST'])
 async def webhook():
     update = Update.de_json(request.get_json(force=True), bot_app.bot)  # Fix: Removed await
