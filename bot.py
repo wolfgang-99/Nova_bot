@@ -1,6 +1,7 @@
 import os
 import logging
 from flask import Flask, request
+import asyncio
 from telegram import Update, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import (
     ApplicationBuilder,
@@ -107,7 +108,8 @@ def webhook():
     if not bot_app.running:
         bot_app.initialize()
 
-    bot_app.create_task(bot_app.process_update(update))
+        # ✅ Ensure the async function runs correctly in a sync context
+        asyncio.run(bot_app.process_update(update))
 
     return "OK", 200
 
