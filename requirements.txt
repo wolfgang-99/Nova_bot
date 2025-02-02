@@ -2,3 +2,5 @@ python-telegram-bot==21.10
 python-dotenv
 flask[async]
 gunicorn~=20.1.0
+quart
+hypercorn
