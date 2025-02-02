@@ -23,7 +23,7 @@ BOT_TOKEN = os.getenv("bot_token")
 
 # Configuration
 TOKEN = BOT_TOKEN # Replace with your bot token
-WEBHOOK_URL = "https://nova-test.onrender.com"  # Replace with your HTTPS URL
+WEBHOOK_URL = "https://nova-bot-m18w.onrender.com"  # Replace with your HTTPS URL
 PORT = 10000  # Port to listen on (typically 443, 80, 88, or 8443)
 
 # --------- flask ----------------------
