@@ -16,7 +16,7 @@ from telegram.ext import (
 from dotenv import load_dotenv
 
 load_dotenv()
-BOT_TOKEN = os.getenv("BOT_TOKEN")
+BOT_TOKEN = os.getenv("bot_token")
 
 # Initialize Quart app
 app = Quart(__name__)
