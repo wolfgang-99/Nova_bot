@@ -1,64 +1,69 @@
 import os
-import logging
-import asyncio
-from quart import Quart, request, jsonify
+from dotenv import load_dotenv
 from telegram import Update, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import (
-    ApplicationBuilder,
+    Application,
     CommandHandler,
     CallbackQueryHandler,
     MessageHandler,
     filters,
     ContextTypes,
 )
+from flask import Flask
+from threading import Thread
+
+# Flask server for Render health checks
+app = Flask(__name__)
+
+
 
 # Load environment variables
-from dotenv import load_dotenv
-
 load_dotenv()
 BOT_TOKEN = os.getenv("bot_token")
 
-# Initialize Quart app
-app = Quart(__name__)
+# Configuration
+TOKEN = BOT_TOKEN # Replace with your bot token
+WEBHOOK_URL = "https://nova-test.onrender.com"  # Replace with your HTTPS URL
+PORT = 10000  # Port to listen on (typically 443, 80, 88, or 8443)
 
-# Initialize Telegram bot application
-bot_app = ApplicationBuilder().token(BOT_TOKEN).build()
+# --------- flask ----------------------
+@app.route('/')
+def home():
+    return "Bot is running!"
 
-# Webhook URL (Replace with your actual URL)
-WEBHOOK_URL = f"https://nova-bot-0rvq.onrender.com/webhook"
+def run_flask():
+    app.run(host='0.0.0.0', port=8080)
 
-# Enable logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
+# ---------- TELEGRAM BOT SECTION -------------------------
 # Function to handle the /start command
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     chat_id = update.effective_chat.id
 
     welcome_msg = """
-    🌠 Welcome to Nova!
-    The fastest Telegram Bot on Solana.
-    Nova allows you to buy or sell tokens in lightning-fast speed and also has many features including:
-    Migration Sniping, Copy-trading, Limit Orders & a lot more.
+🌠 Welcome to Nova!
+The fastest Telegram Bot on Solana.
+Nova allows you to buy or sell tokens in lightning fast speed and also has many features including:
+Migration Sniping, Copy-trading, Limit Orders & a lot more.
 
-    💡 Have an access code?
-    • Enter it below to unlock instant access.
+💡 Have an access code?
+• Enter it below to unlock instant access.
 
-    ⏳ No access code?
-    • Tap the button below to join the queue and be the first to experience lightning-fast transactions.
+⏳ No access code?
+• Tap the button below to join the queue and be the first to experience lightning-fast transactions.
 
-    🚀 Let's get started!
-    """
+🚀 Let's get started!
+"""
 
-    keyboard = [
-        [InlineKeyboardButton("Join Queue", callback_data='button1')],
-        [InlineKeyboardButton("Enter Access Code", callback_data='button2')]
-    ]
+    # Create inline keyboard buttons
+    keyboard = [[InlineKeyboardButton("Join Queue", callback_data='button1')],
+                [InlineKeyboardButton("Enter Access Code", callback_data='button2')]]
     reply_markup = InlineKeyboardMarkup(keyboard)
 
+    # Send initial greeting message with buttons
     await context.bot.send_message(chat_id, welcome_msg, reply_markup=reply_markup)
 
-# Callback for button presses
+
 async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
@@ -68,68 +73,53 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await context.bot.send_message(chat_id, "Please enter your access or referral code.")
         context.user_data["awaiting_code"] = True
 
-# Handle user access code input
+
 async def handle_access_code(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if context.user_data.get("awaiting_code"):
         chat_id = update.effective_chat.id
         access_code = update.message.text.strip()
+        keyboard = [[InlineKeyboardButton("Continue", callback_data='button3')]]
+        reply_markup = InlineKeyboardMarkup(keyboard)
 
         if access_code == "Bullish":
             confirmation_msg = """
-            🎉 Congratulations! Your access code has been successfully approved!
+🎉 Congratulations! Your access code has been successfully approved!
 
-            Welcome to Nova — the Fastest All-In-One Trading Platform. Effortlessly trade any token on Solana with complete control at your fingertips.
+Welcome to Nova — the Fastest All-In-One Trading Platform. Effortlessly trade any token on Solana with complete control at your fingertips.
 
-            ✅ Access Granted: Nova Phase 1
+✅ Access Granted: Nova Phase 1
 
-            Don't forget to join our Support channel and explore the guide below for a smooth start:
+Don't forget to join our Support channel and explore the guide below for a smooth start:
 
-            👉 [Join Support](https://t.me/TradeonNova)
-            👉 Nova Guide
-            👉 YouTube
+👉 <a href="https://t.me/TradeonNova">Join Support</a>
+👉 <a href="https://docs.tradeonnova.io/">Nova Guide</a>
+👉 <a href="https://www.youtube.com/@TradeonNova">YouTube</a>
 
-            💡 Ready to begin? Press Continue below to start using Nova.
-            """
-            await context.bot.send_message(chat_id, confirmation_msg, parse_mode="Markdown")
+💡 Ready to begin? Press Continue below to start using Nova.
+"""
+            await context.bot.send_message(chat_id, confirmation_msg, parse_mode="HTML", reply_markup=reply_markup)
         else:
             await context.bot.send_message(chat_id, "❌ Invalid access code. Please try again.")
+            context.user_data["awaiting_code"] = True
 
-        context.user_data["awaiting_code"] = False
 
-# Quart route to handle Telegram webhook updates
-@app.route('/webhook', methods=['POST'])
-async def webhook():
-    try:
-        data = await request.get_json(force=True)
-        update = Update.de_json(data, bot_app.bot)
+# Main function to run the bot
+def main():
+    # Create Application
+    application = Application.builder().token(TOKEN).build()
 
-        # Explicitly initialize the bot
-        if not bot_app.running:
-            await bot_app.initialize()
+    # Add handlers
+    application.add_handler(CommandHandler("start", start))
+    application.add_handler(CallbackQueryHandler(button_callback))
+    application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_access_code))
 
-        # Run process_update as an async task
-        await bot_app.process_update(update)
-        return jsonify({"status": "ok"})
-
-    except Exception as e:
-        logger.error(f"Error processing webhook: {e}")
-        return jsonify({"status": "error"}), 500
-
-# Function to set the Telegram webhook
-async def set_webhook():
-    await bot_app.bot.set_webhook(WEBHOOK_URL)
+    # Run webhook
+    application.run_webhook(
+        listen="0.0.0.0",
+        port=PORT,
+        webhook_url=WEBHOOK_URL,
+    )
 
 if __name__ == "__main__":
-    # Add handlers
-    bot_app.add_handler(CommandHandler("start", start))
-    bot_app.add_handler(CallbackQueryHandler(button_callback))
-    bot_app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_access_code))
-
-    # Run the bot and Quart app
-    async def run():
-        await bot_app.initialize()
-        await set_webhook()
-        await bot_app.start()
-        await app.run_task(host="0.0.0.0", port=443)
-
-    asyncio.run(run())
+    Thread(target=run_flask).start()
+    main()
