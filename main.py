@@ -64,16 +64,18 @@ None - 0 SOL ($0.00 USD)
 """
 
     # Create inline keyboard buttons
-    keyboard = [[InlineKeyboardButton("Buy", callback_data='buy')],
-                [InlineKeyboardButton("Enter Access Code", callback_data='button2')],
-                [InlineKeyboardButton("Enter Access Code", callback_data='button2')],
-                [InlineKeyboardButton("Enter Access Code", callback_data='button2')],
-                [InlineKeyboardButton("Enter Access Code", callback_data='button2')],
-                [InlineKeyboardButton("Enter Access Code", callback_data='button2')]]
+    keyboard = [[InlineKeyboardButton("Buy", callback_data='button1'), InlineKeyboardButton("Positions", callback_data='button2')],
+    [InlineKeyboardButton("Wallets", callback_data='button3'), InlineKeyboardButton("sniper", callback_data='button4')],
+    [InlineKeyboardButton("Limit Orders", callback_data='button5'), InlineKeyboardButton("Copy Trade", callback_data='button6')],
+    [InlineKeyboardButton("AFK", callback_data='button7'),InlineKeyboardButton("Auto Buy", callback_data='button8')],
+    [InlineKeyboardButton("Nova Click", callback_data='button9'),InlineKeyboardButton("Referrals", callback_data='button10')],
+    [InlineKeyboardButton("Settings", callback_data='button11'),InlineKeyboardButton("Refresh", callback_data='button12')],
+                [InlineKeyboardButton("Close", callback_data='button11')]
+                ]
     reply_markup = InlineKeyboardMarkup(keyboard)
 
     # Send initial greeting message with buttons
-    await context.bot.send_message(chat_id, welcome_msg, reply_markup=reply_markup)
+    await context.bot.send_message(chat_id, welcome_msg, reply_markup=reply_markup, parse_mode="HTML")
 
 
 async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
