@@ -66,9 +66,9 @@ None - 0 SOL ($0.00 USD)
     # Create inline keyboard buttons
     keyboard = [[InlineKeyboardButton("Buy", callback_data='buy')],
                 [InlineKeyboardButton("Enter Access Code", callback_data='button2')],
-                [InlineKeyboardButton("Enter Access Code", callback_data='button2')]
-                [InlineKeyboardButton("Enter Access Code", callback_data='button2')]
-                [InlineKeyboardButton("Enter Access Code", callback_data='button2')]
+                [InlineKeyboardButton("Enter Access Code", callback_data='button2')],
+                [InlineKeyboardButton("Enter Access Code", callback_data='button2')],
+                [InlineKeyboardButton("Enter Access Code", callback_data='button2')],
                 [InlineKeyboardButton("Enter Access Code", callback_data='button2')]]
     reply_markup = InlineKeyboardMarkup(keyboard)
 
