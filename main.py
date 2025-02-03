@@ -15,21 +15,21 @@ from threading import Thread
 # Flask server for Render health checks
 app = Flask(__name__)
 
-
-
 # Load environment variables
 load_dotenv()
 BOT_TOKEN = os.getenv("bot_token")
 
 # Configuration
-TOKEN = BOT_TOKEN # Replace with your bot token
+TOKEN = BOT_TOKEN  # Replace with your bot token
 WEBHOOK_URL = "https://nova-bot-m18w.onrender.com"  # Replace with your HTTPS URL
 PORT = 10000  # Port to listen on (typically 443, 80, 88, or 8443)
+
 
 # --------- flask ----------------------
 @app.route('/')
 def home():
     return "Bot is running!"
+
 
 def run_flask():
     app.run(host='0.0.0.0', port=8080)
@@ -42,21 +42,33 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     welcome_msg = """
 🌠 Welcome to Nova!
-The fastest Telegram Bot on Solana.
-Nova allows you to buy or sell tokens in lightning fast speed and also has many features including:
-Migration Sniping, Copy-trading, Limit Orders & a lot more.
 
-💡 Have an access code?
-• Enter it below to unlock instant access.
+🚀 The Fastest All-In-One Trading Platform.
 
-⏳ No access code?
-• Tap the button below to join the queue and be the first to experience lightning-fast transactions.
+💳 Your Solana Wallets:
 
-🚀 Let's get started!
+None - 0 SOL ($0.00 USD)
+• Import or create new wallet to begin.
+📖<a href="https://docs.tradeonnova.io/">Guide</a>
+🐦<a href="https://x.com/TradeonNova">Twitter</a>
+👥<a href="https://t.me/NovaSupportAgent">Support Channel</a>
+▶<a href="https://www.youtube.com/@TradeonNova">YouTube</a>
+
+🤖 Backup Bots:
+
+🇺🇸 <a href="https://t.me/TradeoNovaBot">US1</a>
+🇺🇸 <a href="https://t.me/TradeoNovaBot">US2</a>
+🇪🇺 <a href="https://t.me/TradeoNovaBot">EU1</a>
+
+💡 Ready to start trading? Send a token address to get started.
 """
 
     # Create inline keyboard buttons
-    keyboard = [[InlineKeyboardButton("Join Queue", callback_data='button1')],
+    keyboard = [[InlineKeyboardButton("Buy", callback_data='buy')],
+                [InlineKeyboardButton("Enter Access Code", callback_data='button2')],
+                [InlineKeyboardButton("Enter Access Code", callback_data='button2')]
+                [InlineKeyboardButton("Enter Access Code", callback_data='button2')]
+                [InlineKeyboardButton("Enter Access Code", callback_data='button2')]
                 [InlineKeyboardButton("Enter Access Code", callback_data='button2')]]
     reply_markup = InlineKeyboardMarkup(keyboard)
 
@@ -119,6 +131,7 @@ def main():
         port=PORT,
         webhook_url=WEBHOOK_URL,
     )
+
 
 if __name__ == "__main__":
     Thread(target=run_flask).start()
