@@ -70,7 +70,7 @@ None - 0 SOL ($0.00 USD)
     [InlineKeyboardButton("AFK", callback_data='button7'),InlineKeyboardButton("Auto Buy", callback_data='button8')],
     [InlineKeyboardButton("Nova Click", callback_data='button9'),InlineKeyboardButton("Referrals", callback_data='button10')],
     [InlineKeyboardButton("Settings", callback_data='button11'),InlineKeyboardButton("Refresh", callback_data='button12')],
-                [InlineKeyboardButton("Close", callback_data='button11')]
+                [InlineKeyboardButton("Close", callback_data='close')]
                 ]
     reply_markup = InlineKeyboardMarkup(keyboard)
 
@@ -141,7 +141,7 @@ def get_wallet_menu() -> tuple[str, InlineKeyboardMarkup]:
             💡 Select an option below.
                     """
     # Create inline keyboard buttons
-    keyboard = [[InlineKeyboardButton("Back to Menu", callback_data='button1'),
+    keyboard = [[InlineKeyboardButton("Back to Menu", callback_data='main_menu'),
                  InlineKeyboardButton("Refresh", callback_data='button2')],
                 [InlineKeyboardButton("Change Default Wallet", callback_data='button3')],
                 [InlineKeyboardButton(text="Create Wallet", callback_data="button4"),
@@ -199,7 +199,7 @@ def main():
     # Callback handlers
     application.add_handler(CallbackQueryHandler(main_menu_callback, pattern="^main_menu$"))
     application.add_handler(CallbackQueryHandler(wallet_callback, pattern="^button3$"))
-    application.add_handler(CallbackQueryHandler(close_callback, pattern="^button13$"))
+    application.add_handler(CallbackQueryHandler(close_callback, pattern="^close$"))
 
     # Keep existing webhook setup
     application.run_webhook(
