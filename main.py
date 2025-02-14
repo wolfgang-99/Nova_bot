@@ -78,56 +78,130 @@ None - 0 SOL ($0.00 USD)
     await context.bot.send_message(chat_id, welcome_msg, reply_markup=reply_markup, parse_mode="HTML")
 
 
-async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
+# ---------- HELPER FUNCTIONS --------------------
+def get_main_menu() -> tuple[str, InlineKeyboardMarkup]:
+    """Return formatted main menu message and keyboard"""
+    welcome_msg = """
+    🌠 Welcome to Nova!
+
+    🚀 The Fastest All-In-One Trading Platform.
+
+    💳 Your Solana Wallets:
+
+    None - 0 SOL ($0.00 USD)
+    • Import or create new wallet to begin.
+    📖<a href="https://docs.tradeonnova.io/">Guide</a>
+    🐦<a href="https://x.com/TradeonNova">Twitter</a>
+    👥<a href="https://t.me/NovaSupportAgent">Support Channel</a>
+    ▶<a href="https://www.youtube.com/@TradeonNova">YouTube</a>
+
+    🤖 Backup Bots:
+
+    🇺🇸 <a href="https://t.me/TradeoNovaBot">US1</a>
+    🇺🇸 <a href="https://t.me/TradeoNovaBot">US2</a>
+    🇪🇺 <a href="https://t.me/TradeoNovaBot">EU1</a>
+
+    💡 Ready to start trading? Send a token address to get started.
+    """
+
+    # Create inline keyboard buttons
+    keyboard = [[InlineKeyboardButton("Buy", callback_data='button1'),
+                 InlineKeyboardButton("Positions", callback_data='button2')],
+                [InlineKeyboardButton("Wallets", callback_data='button3'),
+                 InlineKeyboardButton("sniper", callback_data='button4')],
+                [InlineKeyboardButton("Limit Orders", callback_data='button5'),
+                 InlineKeyboardButton("Copy Trade", callback_data='button6')],
+                [InlineKeyboardButton("AFK", callback_data='button7'),
+                 InlineKeyboardButton("Auto Buy", callback_data='button8')],
+                [InlineKeyboardButton("Nova Click", callback_data='button9'),
+                 InlineKeyboardButton("Referrals", callback_data='button10')],
+                [InlineKeyboardButton("Settings", callback_data='button11'),
+                 InlineKeyboardButton("Refresh", callback_data='button12')],
+                [InlineKeyboardButton("Close", callback_data='button11')]
+                ]
+    return welcome_msg, InlineKeyboardMarkup(keyboard)
+
+
+def get_wallet_menu() -> tuple[str, InlineKeyboardMarkup]:
+    """Return formatted wallet menu message and keyboard"""
+    wallet_msg = """
+            💳 Wallet Settings
+
+            📚 Need more help? Click Here!
+
+            🌐 Create, manage and import wallets here.
+
+            💳 Your Solana Wallets:
+
+            None - 0 SOL ($0.00 USD)
+            • Import new wallet to begin.
+
+            🔒 Tip: Keep your Nova wallets secure by setting a Security Pin below.
+
+            💡 Select an option below.
+                    """
+    # Create inline keyboard buttons
+    keyboard = [[InlineKeyboardButton("Back to Menu", callback_data='button1'),
+                 InlineKeyboardButton("Refresh", callback_data='button2')],
+                [InlineKeyboardButton("Change Default Wallet", callback_data='button3')],
+                [InlineKeyboardButton(text="Create Wallet", callback_data="button4"),
+                 InlineKeyboardButton(text="Import Wallet", callback_data="button5")],
+                [InlineKeyboardButton(text="Rename Wallet", callback_data='button6'),
+                 InlineKeyboardButton(text="Delete Wallet", callback_data='button7')],
+                [InlineKeyboardButton(text="Withdraw", callback_data='button8'),
+                 InlineKeyboardButton(text="EXPORT Private Key", callback_data='button9')],
+                [InlineKeyboardButton(text="Security Pin Setup", callback_data='button10'),
+                 InlineKeyboardButton(text="Settings", callback_data='button11')],
+                ]
+    return wallet_msg, InlineKeyboardMarkup(keyboard)
+
+
+# ---------- COMMAND HANDLERS --------------------
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Handle /start command"""
+    msg, markup = get_main_menu()
+    await update.message.reply_text(msg, reply_markup=markup, parse_mode="HTML")
+
+
+# ---------- CALLBACK HANDLERS -------------------
+async def main_menu_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Handle return to main menu"""
+    query = update.callback_query # Acknowledge the button press
+    await query.answer()
+    msg, markup = get_main_menu()
+    await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML")
+
+
+async def wallet_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Handle wallet button (button3)"""
+    query = update.callback_query # Acknowledge the button press
+    await query.answer()
+
+    msg, markup = get_wallet_menu()
+    await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML")
+
+
+async def close_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Handle close button"""
     query = update.callback_query
     await query.answer()
-    chat_id = query.message.chat.id if query.message else update.effective_chat.id
-
-    if query.data == "button2":
-        await context.bot.send_message(chat_id, "Please enter your access or referral code.")
-        context.user_data["awaiting_code"] = True
+    await query.message.delete()
 
 
-async def handle_access_code(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    if context.user_data.get("awaiting_code"):
-        chat_id = update.effective_chat.id
-        access_code = update.message.text.strip()
-        keyboard = [[InlineKeyboardButton("Continue", callback_data='button3')]]
-        reply_markup = InlineKeyboardMarkup(keyboard)
-
-        if access_code == "Bullish":
-            confirmation_msg = """
-🎉 Congratulations! Your access code has been successfully approved!
-
-Welcome to Nova — the Fastest All-In-One Trading Platform. Effortlessly trade any token on Solana with complete control at your fingertips.
-
-✅ Access Granted: Nova Phase 1
-
-Don't forget to join our Support channel and explore the guide below for a smooth start:
-
-👉 <a href="https://t.me/TradeonNova">Join Support</a>
-👉 <a href="https://docs.tradeonnova.io/">Nova Guide</a>
-👉 <a href="https://www.youtube.com/@TradeonNova">YouTube</a>
-
-💡 Ready to begin? Press Continue below to start using Nova.
-"""
-            await context.bot.send_message(chat_id, confirmation_msg, parse_mode="HTML", reply_markup=reply_markup)
-        else:
-            await context.bot.send_message(chat_id, "❌ Invalid access code. Please try again.")
-            context.user_data["awaiting_code"] = True
-
-
+# ---------- APPLICATION SETUP -------------------
 # Main function to run the bot
 def main():
-    # Create Application
     application = Application.builder().token(TOKEN).build()
 
-    # Add handlers
+    # Command handlers
     application.add_handler(CommandHandler("start", start))
-    application.add_handler(CallbackQueryHandler(button_callback))
-    application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_access_code))
 
-    # Run webhook
+    # Callback handlers
+    application.add_handler(CallbackQueryHandler(main_menu_callback, pattern="^main_menu$"))
+    application.add_handler(CallbackQueryHandler(wallet_callback, pattern="^button3$"))
+    application.add_handler(CallbackQueryHandler(close_callback, pattern="^button13$"))
+
+    # Keep existing webhook setup
     application.run_webhook(
         listen="0.0.0.0",
         port=PORT,
