@@ -37,45 +37,7 @@ def run_flask():
 
 # ---------- TELEGRAM BOT SECTION -------------------------
 # Function to handle the /start command
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    chat_id = update.effective_chat.id
 
-    welcome_msg = """
-🌠 Welcome to Nova!
-
-🚀 The Fastest All-In-One Trading Platform.
-
-💳 Your Solana Wallets:
-
-None - 0 SOL ($0.00 USD)
-• Import or create new wallet to begin.
-📖<a href="https://docs.tradeonnova.io/">Guide</a>
-🐦<a href="https://x.com/TradeonNova">Twitter</a>
-👥<a href="https://t.me/NovaSupportAgent">Support Channel</a>
-▶<a href="https://www.youtube.com/@TradeonNova">YouTube</a>
-
-🤖 Backup Bots:
-
-🇺🇸 <a href="https://t.me/TradeoNovaBot">US1</a>
-🇺🇸 <a href="https://t.me/TradeoNovaBot">US2</a>
-🇪🇺 <a href="https://t.me/TradeoNovaBot">EU1</a>
-
-💡 Ready to start trading? Send a token address to get started.
-"""
-
-    # Create inline keyboard buttons
-    keyboard = [[InlineKeyboardButton("Buy", callback_data='button1'), InlineKeyboardButton("Positions", callback_data='button2')],
-    [InlineKeyboardButton("Wallets", callback_data='button3'), InlineKeyboardButton("sniper", callback_data='button4')],
-    [InlineKeyboardButton("Limit Orders", callback_data='button5'), InlineKeyboardButton("Copy Trade", callback_data='button6')],
-    [InlineKeyboardButton("AFK", callback_data='button7'),InlineKeyboardButton("Auto Buy", callback_data='button8')],
-    [InlineKeyboardButton("Nova Click", callback_data='button9'),InlineKeyboardButton("Referrals", callback_data='button10')],
-    [InlineKeyboardButton("Settings", callback_data='button11'),InlineKeyboardButton("Refresh", callback_data='button12')],
-                [InlineKeyboardButton("Close", callback_data='close')]
-                ]
-    reply_markup = InlineKeyboardMarkup(keyboard)
-
-    # Send initial greeting message with buttons
-    await context.bot.send_message(chat_id, welcome_msg, reply_markup=reply_markup, parse_mode="HTML")
 
 
 # ---------- HELPER FUNCTIONS --------------------
