@@ -81,7 +81,7 @@ def get_main_menu() -> tuple[str, InlineKeyboardMarkup]:
 
 
 def get_buy_menu() -> tuple[str, InlineKeyboardMarkup]:
-    buy_msg = """ hey
+    buy_msg = """ hey1
     """
 
     keyboard = [[InlineKeyboardButton("Back to Menu", callback_data='main_menu'),
@@ -91,7 +91,7 @@ def get_buy_menu() -> tuple[str, InlineKeyboardMarkup]:
 
 
 def get_positions_menu() -> tuple[str, InlineKeyboardMarkup]:
-    postion_msg = """hey
+    postion_msg = """hey2
     """
 
     keyboard = [[InlineKeyboardButton("Back to Menu", callback_data='main_menu'),
@@ -135,7 +135,7 @@ def get_wallet_menu() -> tuple[str, InlineKeyboardMarkup]:
 
 
 def get_sniper_menu() -> tuple[str, InlineKeyboardMarkup]:
-    msg = """hey
+    msg = """hey6
     """
 
     keyboard = [[InlineKeyboardButton("Back to Menu", callback_data='main_menu'),
@@ -145,7 +145,7 @@ def get_sniper_menu() -> tuple[str, InlineKeyboardMarkup]:
 
 
 def get_orders_menu() -> tuple[str, InlineKeyboardMarkup]:
-    msg = """hey
+    msg = """hey7
     """
 
     keyboard = [[InlineKeyboardButton("Back to Menu", callback_data='main_menu'),
@@ -155,7 +155,7 @@ def get_orders_menu() -> tuple[str, InlineKeyboardMarkup]:
 
 
 def get_copy_trade_menu() -> tuple[str, InlineKeyboardMarkup]:
-    msg = """hey
+    msg = """hey8
     """
 
     keyboard = [[InlineKeyboardButton("Back to Menu", callback_data='main_menu'),
@@ -165,7 +165,7 @@ def get_copy_trade_menu() -> tuple[str, InlineKeyboardMarkup]:
 
 
 def get_afk_menu() -> tuple[str, InlineKeyboardMarkup]:
-    msg = """hey
+    msg = """hey9
     """
 
     keyboard = [[InlineKeyboardButton("Back to Menu", callback_data='main_menu'),
@@ -175,7 +175,7 @@ def get_afk_menu() -> tuple[str, InlineKeyboardMarkup]:
 
 
 def get_auto_trade_menu() -> tuple[str, InlineKeyboardMarkup]:
-    msg = """hey
+    msg = """hey10
     """
 
     keyboard = [[InlineKeyboardButton("Back to Menu", callback_data='main_menu'),
@@ -185,7 +185,7 @@ def get_auto_trade_menu() -> tuple[str, InlineKeyboardMarkup]:
 
 
 def get_nova_click_menu() -> tuple[str, InlineKeyboardMarkup]:
-    msg = """hey
+    msg = """hey11
     """
 
     keyboard = [[InlineKeyboardButton("Back to Menu", callback_data='main_menu'),
@@ -195,7 +195,7 @@ def get_nova_click_menu() -> tuple[str, InlineKeyboardMarkup]:
 
 
 def get_referrals_menu() -> tuple[str, InlineKeyboardMarkup]:
-    msg = """hey
+    msg = """hey12
     """
 
     keyboard = [[InlineKeyboardButton("Back to Menu", callback_data='main_menu'),
@@ -205,7 +205,7 @@ def get_referrals_menu() -> tuple[str, InlineKeyboardMarkup]:
 
 
 def get_settings_menu() -> tuple[str, InlineKeyboardMarkup]:
-    msg = """ hey
+    msg = """ hey13 
     """
 
     keyboard = [[InlineKeyboardButton("Back to Menu", callback_data='main_menu'),
