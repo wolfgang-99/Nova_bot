@@ -434,9 +434,9 @@ def main():
     application.add_handler(CommandHandler("start", start))
 
     # Callback handlers
-    application.add_handler(CallbackQueryHandler(buy_callback, pattern="^main_menu$"))
-    application.add_handler(CallbackQueryHandler(positions_callback, pattern="^button1$"))
-    application.add_handler(CallbackQueryHandler(wallet_callback, pattern="^button2$"))
+    application.add_handler(CallbackQueryHandler(main_menu_callback, pattern="^main_menu$"))
+    application.add_handler(CallbackQueryHandler(buy_callback, pattern="^button1$"))
+    application.add_handler(CallbackQueryHandler(positions_callback, pattern="^button2$"))
     application.add_handler(CallbackQueryHandler(wallet_callback, pattern="^button3$"))
     application.add_handler(CallbackQueryHandler(sniper_callback, pattern="^button4$"))
     application.add_handler(CallbackQueryHandler(orders_callback, pattern="^button5$"))
