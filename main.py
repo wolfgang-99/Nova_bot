@@ -74,7 +74,7 @@ def get_main_menu() -> tuple[str, InlineKeyboardMarkup]:
                 [InlineKeyboardButton("Nova Click", callback_data='button9'),
                  InlineKeyboardButton("Referrals", callback_data='button10')],
                 [InlineKeyboardButton("Settings", callback_data='button11'),
-                 InlineKeyboardButton("Refresh", callback_data='Refresh')],
+                 InlineKeyboardButton("Refresh", callback_data='refresh_')],
                 [InlineKeyboardButton("Close", callback_data='button11')]
                 ]
     return welcome_msg, InlineKeyboardMarkup(keyboard)
@@ -84,8 +84,8 @@ def get_buy_menu() -> tuple[str, InlineKeyboardMarkup]:
     buy_msg = """ hey1
     """
 
-    keyboard = [[InlineKeyboardButton("Back to Menu", callback_data='main_menu'),
-                 InlineKeyboardButton("Refresh", callback_data='Refresh')],
+    keyboard = [[InlineKeyboardButton("⬅Back to Menu", callback_data='main_menu'),
+                 InlineKeyboardButton("🔁Refresh", callback_data='refresh_')],
                 ]
     return buy_msg, InlineKeyboardMarkup(keyboard)
 
@@ -94,8 +94,8 @@ def get_positions_menu() -> tuple[str, InlineKeyboardMarkup]:
     postion_msg = """hey2
     """
 
-    keyboard = [[InlineKeyboardButton("Back to Menu", callback_data='main_menu'),
-                 InlineKeyboardButton("Refresh", callback_data='Refresh')],
+    keyboard = [[InlineKeyboardButton("⬅Back to Menu", callback_data='main_menu'),
+                 InlineKeyboardButton("🔁Refresh", callback_data='refresh_')],
                 ]
     return postion_msg, InlineKeyboardMarkup(keyboard)
 
@@ -119,8 +119,8 @@ def get_wallet_menu() -> tuple[str, InlineKeyboardMarkup]:
             💡 Select an option below.
                     """
     # Create inline keyboard buttons
-    keyboard = [[InlineKeyboardButton("Back to Menu", callback_data='main_menu'),
-                 InlineKeyboardButton("Refresh", callback_data='button2')],
+    keyboard = [[InlineKeyboardButton("⬅Back to Menu", callback_data='main_menu'),
+                 InlineKeyboardButton("🔁Refresh", callback_data='button2')],
                 [InlineKeyboardButton("Change Default Wallet", callback_data='button3')],
                 [InlineKeyboardButton(text="Create Wallet", callback_data="button4"),
                  InlineKeyboardButton(text="Import Wallet", callback_data="button5")],
@@ -135,41 +135,90 @@ def get_wallet_menu() -> tuple[str, InlineKeyboardMarkup]:
 
 
 def get_sniper_menu() -> tuple[str, InlineKeyboardMarkup]:
-    msg = """hey6
+    msg = """
+🎯 Nova Sniper
+
+📚 Need more help? <a href="https://docs.tradeonnova.io/modules/sniper">Click Here!</a>
+
+🌐 Snipe Pump.Fun migrating tokens and new Raydium pools.
+
+• No active sniper tasks.💡 Create and configure tasks below.
     """
 
-    keyboard = [[InlineKeyboardButton("Back to Menu", callback_data='main_menu'),
-                 InlineKeyboardButton("Refresh", callback_data='Refresh')],
+    keyboard = [
+        [InlineKeyboardButton("Start All", callback_data='start_all'),
+         InlineKeyboardButton("⏸Stop All", callback_data='stop_all')],
+        [InlineKeyboardButton("🆕New Task", callback_data='new_task'),
+         InlineKeyboardButton("🗑Delete Task", callback_data='delete_task1')],
+        [InlineKeyboardButton("⬅Back to Menu", callback_data='main_menu'),
+                 InlineKeyboardButton("🔁Refresh", callback_data='refresh_')],
                 ]
     return msg, InlineKeyboardMarkup(keyboard)
 
 
 def get_orders_menu() -> tuple[str, InlineKeyboardMarkup]:
-    msg = """hey7
+    msg = """
+🔒📖 Nova Limit Orders
+
+🌐 Automatically trigger buy and sell trades when a token or position hits a certain market cap, price or profit level.
+
+• No active limit orders.
+
+💡 Orders can be created by pasting a token address.
     """
 
-    keyboard = [[InlineKeyboardButton("Back to Menu", callback_data='main_menu'),
-                 InlineKeyboardButton("Refresh", callback_data='Refresh')],
+    keyboard = [[InlineKeyboardButton("⬅Back to Menu", callback_data='main_menu'),
+                 InlineKeyboardButton("🔁Refresh", callback_data='refresh_')],
+                InlineKeyboardButton("🗑Delete Task", callback_data="delete_task2")
                 ]
     return msg, InlineKeyboardMarkup(keyboard)
 
 
 def get_copy_trade_menu() -> tuple[str, InlineKeyboardMarkup]:
-    msg = """hey8
+    msg = """
+    
+🤖 Nova Copy Trade
+
+🌐 Utilize blazing fast copy-trading speeds with Nova.
+
+• No copy trade tasks found.
+
+💡 Create a task below.
     """
 
-    keyboard = [[InlineKeyboardButton("Back to Menu", callback_data='main_menu'),
-                 InlineKeyboardButton("Refresh", callback_data='Refresh')],
+    keyboard = [
+        [InlineKeyboardButton("▶Start All", callback_data='start_all'),
+         InlineKeyboardButton("⏸Stop All", callback_data='stop_all')],
+        [InlineKeyboardButton("🆕New Task", callback_data='new_task'),
+         InlineKeyboardButton("🗑Delete Task", callback_data='delete_task3')],
+        [InlineKeyboardButton("⏩Mass Add",callback_data="mass_add")],
+        [InlineKeyboardButton("⬅Back to Menu", callback_data='main_menu'),
+                 InlineKeyboardButton("🔁Refresh", callback_data='refresh_')],
                 ]
     return msg, InlineKeyboardMarkup(keyboard)
 
 
 def get_afk_menu() -> tuple[str, InlineKeyboardMarkup]:
-    msg = """hey9
+    msg = """    
+💤 Nova AFK
+
+📚 Need more help? <a href= "https://docs.tradeonnova.io/modules/afk" >Click Here!</a>
+
+🌐 Automatically buy into new Pump.Fun & Raydium tokens as soon as they launch based on your filters.
+
+• No active AFK tasks.
+
+💡 Create and configure tasks below.
     """
 
-    keyboard = [[InlineKeyboardButton("Back to Menu", callback_data='main_menu'),
-                 InlineKeyboardButton("Refresh", callback_data='Refresh')],
+    keyboard = [
+        [InlineKeyboardButton("▶Start All", callback_data='start_all'),
+         InlineKeyboardButton("⏸Stop All", callback_data='stop_all')],
+        [InlineKeyboardButton("🆕New Task", callback_data='new_task'),
+         InlineKeyboardButton("🗑Delete Task", callback_data='delete_task3')],
+        [InlineKeyboardButton("⏩Mass Add",callback_data="mass_add")],
+        [InlineKeyboardButton("⬅Back to Menu", callback_data='main_menu'),
+                 InlineKeyboardButton("🔁Refresh", callback_data='refresh_')],
                 ]
     return msg, InlineKeyboardMarkup(keyboard)
 
@@ -178,38 +227,77 @@ def get_auto_trade_menu() -> tuple[str, InlineKeyboardMarkup]:
     msg = """hey10
     """
 
-    keyboard = [[InlineKeyboardButton("Back to Menu", callback_data='main_menu'),
-                 InlineKeyboardButton("Refresh", callback_data='Refresh')],
+    keyboard = [[InlineKeyboardButton("⬅Back to Menu", callback_data='main_menu'),
+                 InlineKeyboardButton("🔁Refresh", callback_data='refresh_')],
                 ]
     return msg, InlineKeyboardMarkup(keyboard)
 
 
 def get_nova_click_menu() -> tuple[str, InlineKeyboardMarkup]:
-    msg = """hey11
+    msg = """
+👆 Nova Click is LIVE! 👆
+
+Download Nova Click here: <a href= "https://chromewebstore.google.com/detail/nova-click/agegahikpkeljmhlggpipmepoigaimdk" > Download </a>
+
+Learn how to setup and use Nova click here:  <a href= "https://docs.tradeonnova.io/modules/nova-click" > Guide </a>
+
+👋 Got a question? Join our <a href= "https://t.me/TradeOnNova" > Support Channel </a> for assistance.
     """
 
-    keyboard = [[InlineKeyboardButton("Back to Menu", callback_data='main_menu'),
-                 InlineKeyboardButton("Refresh", callback_data='Refresh')],
+    keyboard = [[InlineKeyboardButton("⬅Back to Menu", callback_data='main_menu')],
+                [InlineKeyboardButton("❌Close", callback_data="close")]
                 ]
     return msg, InlineKeyboardMarkup(keyboard)
 
 
-def get_referrals_menu() -> tuple[str, InlineKeyboardMarkup]:
-    msg = """hey12
+def get_referrals_menu(user_id) -> tuple[str, InlineKeyboardMarkup]:
+    msg = f"""    
+👥 Nova Referrals
+
+📚 Need more help? <a href= "https://docs.tradeonnova.io/earning-with-nova/referrals"> Click Here! </a>
+
+📈 Referrals
+
+Tier 1
+• Users: 0
+• Volume: 0 SOL
+• Earnings: 0 SOL
+
+Tier 2
+• Users: 0
+• Volume: 0 SOL
+• Earnings: 0 SOL
+
+Tier 3
+• Users: 0
+• Volume: 0 SOL
+• Earnings: 0 SOL
+
+💸 Payout Overview
+
+• Total Rewards: 0 SOL
+• Total Payments Sent: 0 SOL
+• Total Payments Pending: 0 SOL
+
+Your Referral Link
+
+🔗 https://t.me/TradeoNovaBot?start=r-{user_id}
+
+💡 Select an action below.
     """
 
-    keyboard = [[InlineKeyboardButton("Back to Menu", callback_data='main_menu'),
-                 InlineKeyboardButton("Refresh", callback_data='Refresh')],
+    keyboard = [[InlineKeyboardButton("⬅Back to Menu", callback_data='main_menu'),
+                 InlineKeyboardButton("🔁Refresh", callback_data='refresh_')],
                 ]
     return msg, InlineKeyboardMarkup(keyboard)
 
 
 def get_settings_menu() -> tuple[str, InlineKeyboardMarkup]:
-    msg = """ hey13 
+    msg = """ get_settings_menu
     """
 
-    keyboard = [[InlineKeyboardButton("Back to Menu", callback_data='main_menu'),
-                 InlineKeyboardButton("Refresh", callback_data='Refresh')],
+    keyboard = [[InlineKeyboardButton("⬅Back to Menu", callback_data='main_menu'),
+                 InlineKeyboardButton("🔁Refresh", callback_data='refresh_')],
                 ]
     return msg, InlineKeyboardMarkup(keyboard)
 
@@ -315,8 +403,9 @@ async def referrals_callback(update: Update, context: ContextTypes.DEFAULT_TYPE)
     """Handle referrals button (button10)"""
     query = update.callback_query  # Acknowledge the button press
     await query.answer()
+    user_id = update.message.from_user.id
 
-    msg, markup = get_referrals_menu()
+    msg, markup = get_referrals_menu(user_id)
     await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML")
 
 
