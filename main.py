@@ -223,7 +223,7 @@ def get_afk_menu() -> tuple[str, InlineKeyboardMarkup]:
     return msg, InlineKeyboardMarkup(keyboard)
 
 
-def get_auto_trade_menu() -> tuple[str, InlineKeyboardMarkup]:
+def get_auto_buy_menu() -> tuple[str, InlineKeyboardMarkup]:
     msg = """hey10
     """
 
@@ -245,7 +245,7 @@ Learn how to setup and use Nova click here:  <a href= "https://docs.tradeonnova.
     """
 
     keyboard = [[InlineKeyboardButton("⬅Back to Menu", callback_data='main_menu')],
-                [InlineKeyboardButton("❌Close", callback_data="close")]
+                [InlineKeyboardButton("xClose", callback_data="close")]
                 ]
     return msg, InlineKeyboardMarkup(keyboard)
 
@@ -381,12 +381,12 @@ async def afk_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML")
 
 
-async def auto_trade_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Handle auto_trade button (button8)"""
+async def auto_buy_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Handle auto_buy button (button8)"""
     query = update.callback_query  # Acknowledge the button press
     await query.answer()
 
-    msg, markup = get_auto_trade_menu()
+    msg, markup = get_auto_buy_menu()
     await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML")
 
 
@@ -442,7 +442,7 @@ def main():
     application.add_handler(CallbackQueryHandler(orders_callback, pattern="^button5$"))
     application.add_handler(CallbackQueryHandler(copy_trade_callback, pattern="^button6$"))
     application.add_handler(CallbackQueryHandler(afk_callback, pattern="^button7$"))
-    application.add_handler(CallbackQueryHandler(auto_trade_callback, pattern="^button8$"))
+    application.add_handler(CallbackQueryHandler(auto_buy_callback, pattern="^button8$"))
     application.add_handler(CallbackQueryHandler(nova_click_callback, pattern="^button9$"))
     application.add_handler(CallbackQueryHandler(referrals_callback, pattern="^button10$"))
     application.add_handler(CallbackQueryHandler(settings_callback, pattern="^button11$"))
