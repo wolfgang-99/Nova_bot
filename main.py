@@ -403,7 +403,7 @@ async def referrals_callback(update: Update, context: ContextTypes.DEFAULT_TYPE)
     """Handle referrals button (button10)"""
     query = update.callback_query  # Acknowledge the button press
     await query.answer()
-    user_id = update.message.from_user.id
+    user_id = query.from_user.id
 
     msg, markup = get_referrals_menu(user_id)
     await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML")
