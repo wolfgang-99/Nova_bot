@@ -63,19 +63,19 @@ def get_main_menu() -> tuple[str, InlineKeyboardMarkup]:
     """
 
     # Create inline keyboard buttons
-    keyboard = [[InlineKeyboardButton("Buy", callback_data='button1'),
-                 InlineKeyboardButton("Positions", callback_data='button2')],
-                [InlineKeyboardButton("Wallets", callback_data='button3'),
-                 InlineKeyboardButton("sniper", callback_data='button4')],
-                [InlineKeyboardButton("Limit Orders", callback_data='button5'),
-                 InlineKeyboardButton("Copy Trade", callback_data='button6')],
-                [InlineKeyboardButton("AFK", callback_data='button7'),
-                 InlineKeyboardButton("Auto Buy", callback_data='button8')],
-                [InlineKeyboardButton("Nova Click", callback_data='button9'),
-                 InlineKeyboardButton("Referrals", callback_data='button10')],
-                [InlineKeyboardButton("Settings", callback_data='button11'),
-                 InlineKeyboardButton("Refresh", callback_data='refresh_')],
-                [InlineKeyboardButton("Close", callback_data='button11')]
+    keyboard = [[InlineKeyboardButton("📈Buy", callback_data='button1'),
+                 InlineKeyboardButton("💼Positions", callback_data='button2')],
+                [InlineKeyboardButton("💳Wallets", callback_data='button3'),
+                 InlineKeyboardButton("🎯sniper", callback_data='button4')],
+                [InlineKeyboardButton("📖Limit Orders", callback_data='button5'),
+                 InlineKeyboardButton("🤖Copy Trade", callback_data='button6')],
+                [InlineKeyboardButton("💤AFK", callback_data='button7'),
+                 InlineKeyboardButton("🕹Auto Buy", callback_data='button8')],
+                [InlineKeyboardButton("🖱Nova Click", callback_data='button9'),
+                 InlineKeyboardButton("💰Referrals", callback_data='button10')],
+                [InlineKeyboardButton("⚙Settings", callback_data='button11'),
+                 InlineKeyboardButton("🔁Refresh", callback_data='refresh_')],
+                [InlineKeyboardButton("x Close", callback_data='button11')]
                 ]
     return welcome_msg, InlineKeyboardMarkup(keyboard)
 
@@ -303,17 +303,17 @@ def get_settings_menu() -> tuple[str, InlineKeyboardMarkup]:
 
     keyboard = [[InlineKeyboardButton("⬅Back to Menu", callback_data='main_menu'),
                  InlineKeyboardButton("🔁Refresh", callback_data='refresh_')],
-                [InlineKeyboardButton("fee", callback_data="fee_"),
-                 InlineKeyboardButton("slippage", callback_data="slippage_")],
-                [InlineKeyboardButton("MEV Protect", callback_data="mev_protect_1"),
-                 InlineKeyboardButton("Buy: Ultra", callback_data="buy_ultra")],
-                [InlineKeyboardButton("Mev Protect", callback_data="mev_protect_2"),
-                 InlineKeyboardButton("Sell: Ultra", callback_data="sell_ultra")],
-                [InlineKeyboardButton("Presets", callback_data="presets"),
-                 InlineKeyboardButton("Wallets", callback_data="wallets")],
-                [InlineKeyboardButton("Quick Buy", callback_data="quick_buy"),
-                 InlineKeyboardButton("Quick Sell", callback_data="quick_sell")],
-                [InlineKeyboardButton("Auto Buy", callback_data="auto_buy")],
+                [InlineKeyboardButton("⛽fee", callback_data="fee_"),
+                 InlineKeyboardButton("💦slippage", callback_data="slippage_")],
+                [InlineKeyboardButton("🟢MEV Protect", callback_data="mev_protect_1"),
+                 InlineKeyboardButton("🛠Buy: Ultra", callback_data="buy_ultra")],
+                [InlineKeyboardButton("🟢Mev Protect", callback_data="mev_protect_2"),
+                 InlineKeyboardButton("💦Sell: Ultra", callback_data="sell_ultra")],
+                [InlineKeyboardButton("⚙Presets", callback_data="presets_"),
+                 InlineKeyboardButton("💳Wallets", callback_data="wallets_")],
+                [InlineKeyboardButton("⚡Quick Buy", callback_data="quick_buy"),
+                 InlineKeyboardButton("💰Quick Sell", callback_data="quick_sell")],
+                [InlineKeyboardButton("🕹Auto Buy", callback_data="auto_buy")],
                 [InlineKeyboardButton("x Close", callback_data="close")],
                 ]
     return msg, InlineKeyboardMarkup(keyboard)
