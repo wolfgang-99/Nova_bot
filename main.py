@@ -169,7 +169,7 @@ def get_orders_menu() -> tuple[str, InlineKeyboardMarkup]:
 
     keyboard = [[InlineKeyboardButton("⬅Back to Menu", callback_data='main_menu'),
                  InlineKeyboardButton("🔁Refresh", callback_data='refresh_')],
-                InlineKeyboardButton("🗑Delete Task", callback_data="delete_task2")
+                [InlineKeyboardButton("🗑Delete Task", callback_data="delete_task2")],
                 ]
     return msg, InlineKeyboardMarkup(keyboard)
 
