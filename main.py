@@ -4,7 +4,7 @@ from telegram import Update, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import (
     Application,
     CommandHandler,
-    CallbackQueryHandler, ContextTypes,
+    CallbackQueryHandler, ContextTypes, MessageHandler,filters
 )
 from flask import Flask
 from threading import Thread
@@ -324,7 +324,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(msg, reply_markup=markup, parse_mode="HTML", disable_web_page_preview=True)
 
 
-# ---------- MENUS CALLBACK HANDLERS -------------------
+# ----------  CALLBACK HANDLERS -------------------
 async def main_menu_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle return to main menu"""
     query = update.callback_query  # Acknowledge the button press
@@ -453,7 +453,7 @@ async def create_wallet_callback(update:Update, context:ContextTypes.DEFAULT_TYP
     context.user_data['wallet_name'] = True
 
 
-# -------------------HELPER SUB-CALLBACK FUNCTIONS ------------------------------
+# ------------------- SUB-CALLBACK MESSAGE FUNCTIONS ------------------------------
 async def handle_wallet_creations(update:Update,context:ContextTypes.DEFAULT_TYPE):
     "Handle reply for wallet creation"
     if context.user_data.get("wallet_name"):
@@ -501,6 +501,9 @@ def main():
 
     # sub-callback handlers
     application.add_handler(CallbackQueryHandler(create_wallet_callback, pattern="^create_wallet$"))
+
+    # messages handlers for sub-callback
+    application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_wallet_creations))
 
     # Keep existing webhook setup
     application.run_webhook(
