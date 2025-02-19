@@ -4,7 +4,7 @@ from telegram import Update, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import (
     Application,
     CommandHandler,
-    CallbackQueryHandler,
+    CallbackQueryHandler, ContextTypes,
 )
 from flask import Flask
 from threading import Thread
@@ -318,7 +318,7 @@ def get_settings_menu() -> tuple[str, InlineKeyboardMarkup]:
 
 
 # ---------- COMMAND HANDLERS --------------------
-async def start(update: Update):
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle /start command"""
     msg, markup = get_main_menu()
     await update.message.reply_text(msg, reply_markup=markup, parse_mode="HTML", disable_web_page_preview=True)
