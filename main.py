@@ -5,8 +5,6 @@ from telegram.ext import (
     Application,
     CommandHandler,
     CallbackQueryHandler,
-    MessageHandler,
-    ContextTypes,
 )
 from flask import Flask
 from threading import Thread
@@ -91,13 +89,13 @@ def get_buy_menu() -> tuple[str, InlineKeyboardMarkup]:
 
 
 def get_positions_menu() -> tuple[str, InlineKeyboardMarkup]:
-    postion_msg = """hey2
+    position_msg = """hey2
     """
 
     keyboard = [[InlineKeyboardButton("⬅Back to Menu", callback_data='main_menu'),
                  InlineKeyboardButton("🔁Refresh", callback_data='refresh_')],
                 ]
-    return postion_msg, InlineKeyboardMarkup(keyboard)
+    return position_msg, InlineKeyboardMarkup(keyboard)
 
 
 def get_wallet_menu() -> tuple[str, InlineKeyboardMarkup]:
@@ -151,7 +149,7 @@ def get_sniper_menu() -> tuple[str, InlineKeyboardMarkup]:
         [InlineKeyboardButton("🆕New Task", callback_data='new_task'),
          InlineKeyboardButton("🗑Delete Task", callback_data='delete_task1')],
         [InlineKeyboardButton("⬅Back to Menu", callback_data='main_menu'),
-                 InlineKeyboardButton("🔁Refresh", callback_data='refresh_')],
+            InlineKeyboardButton("🔁Refresh", callback_data='refresh_')],
                 ]
     return msg, InlineKeyboardMarkup(keyboard)
 
@@ -191,9 +189,9 @@ def get_copy_trade_menu() -> tuple[str, InlineKeyboardMarkup]:
          InlineKeyboardButton("⏸Stop All", callback_data='stop_all')],
         [InlineKeyboardButton("🆕New Task", callback_data='new_task'),
          InlineKeyboardButton("🗑Delete Task", callback_data='delete_task3')],
-        [InlineKeyboardButton("⏩Mass Add",callback_data="mass_add")],
+        [InlineKeyboardButton("⏩Mass Add", callback_data="mass_add")],
         [InlineKeyboardButton("⬅Back to Menu", callback_data='main_menu'),
-                 InlineKeyboardButton("🔁Refresh", callback_data='refresh_')],
+            InlineKeyboardButton("🔁Refresh", callback_data='refresh_')],
                 ]
     return msg, InlineKeyboardMarkup(keyboard)
 
@@ -216,9 +214,9 @@ def get_afk_menu() -> tuple[str, InlineKeyboardMarkup]:
          InlineKeyboardButton("⏸Stop All", callback_data='stop_all')],
         [InlineKeyboardButton("🆕New Task", callback_data='new_task'),
          InlineKeyboardButton("🗑Delete Task", callback_data='delete_task3')],
-        [InlineKeyboardButton("⏩Mass Add",callback_data="mass_add")],
+        [InlineKeyboardButton("⏩Mass Add", callback_data="mass_add")],
         [InlineKeyboardButton("⬅Back to Menu", callback_data='main_menu'),
-                 InlineKeyboardButton("🔁Refresh", callback_data='refresh_')],
+            InlineKeyboardButton("🔁Refresh", callback_data='refresh_')],
                 ]
     return msg, InlineKeyboardMarkup(keyboard)
 
@@ -320,14 +318,14 @@ def get_settings_menu() -> tuple[str, InlineKeyboardMarkup]:
 
 
 # ---------- COMMAND HANDLERS --------------------
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def start(update: Update):
     """Handle /start command"""
     msg, markup = get_main_menu()
-    await update.message.reply_text(msg, reply_markup=markup, parse_mode="HTML")
+    await update.message.reply_text(msg, reply_markup=markup, parse_mode="HTML", disable_web_page_preview=True)
 
 
 # ---------- CALLBACK HANDLERS -------------------
-async def main_menu_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def main_menu_callback(update: Update):
     """Handle return to main menu"""
     query = update.callback_query  # Acknowledge the button press
     await query.answer()
@@ -335,7 +333,7 @@ async def main_menu_callback(update: Update, context: ContextTypes.DEFAULT_TYPE)
     await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML", disable_web_page_preview=True)
 
 
-async def buy_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def buy_callback(update: Update):
     """Handle buy button (button1)"""
     query = update.callback_query  # Acknowledge the button press
     await query.answer()
@@ -344,7 +342,7 @@ async def buy_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML", disable_web_page_preview=True)
 
 
-async def positions_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def positions_callback(update: Update):
     """Handle position button (button2)"""
     query = update.callback_query  # Acknowledge the button press
     await query.answer()
@@ -353,7 +351,7 @@ async def positions_callback(update: Update, context: ContextTypes.DEFAULT_TYPE)
     await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML", disable_web_page_preview=True)
 
 
-async def wallet_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def wallet_callback(update: Update):
     """Handle wallet button (button3)"""
     query = update.callback_query  # Acknowledge the button press
     await query.answer()
@@ -362,7 +360,7 @@ async def wallet_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML", disable_web_page_preview=True)
 
 
-async def sniper_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def sniper_callback(update: Update):
     """Handle sniper button (button4)"""
     query = update.callback_query  # Acknowledge the button press
     await query.answer()
@@ -371,7 +369,7 @@ async def sniper_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML", disable_web_page_preview=True)
 
 
-async def orders_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def orders_callback(update: Update):
     """Handle orders button (button5)"""
     query = update.callback_query  # Acknowledge the button press
     await query.answer()
@@ -380,7 +378,7 @@ async def orders_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML", disable_web_page_preview=True)
 
 
-async def copy_trade_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def copy_trade_callback(update: Update):
     """Handle copy_trade button (button6)"""
     query = update.callback_query  # Acknowledge the button press
     await query.answer()
@@ -389,7 +387,7 @@ async def copy_trade_callback(update: Update, context: ContextTypes.DEFAULT_TYPE
     await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML", disable_web_page_preview=True)
 
 
-async def afk_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def afk_callback(update: Update):
     """Handle afk button (button7)"""
     query = update.callback_query  # Acknowledge the button press
     await query.answer()
@@ -398,7 +396,7 @@ async def afk_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML", disable_web_page_preview=True)
 
 
-async def auto_buy_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def auto_buy_callback(update: Update):
     """Handle auto_buy button (button8)"""
     query = update.callback_query  # Acknowledge the button press
     await query.answer()
@@ -407,7 +405,7 @@ async def auto_buy_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML", disable_web_page_preview=True)
 
 
-async def nova_click_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def nova_click_callback(update: Update):
     """Handle nova_click button (button9)"""
     query = update.callback_query  # Acknowledge the button press
     await query.answer()
@@ -416,7 +414,7 @@ async def nova_click_callback(update: Update, context: ContextTypes.DEFAULT_TYPE
     await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML", disable_web_page_preview=True)
 
 
-async def referrals_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def referrals_callback(update: Update):
     """Handle referrals button (button10)"""
     query = update.callback_query  # Acknowledge the button press
     await query.answer()
@@ -426,7 +424,7 @@ async def referrals_callback(update: Update, context: ContextTypes.DEFAULT_TYPE)
     await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML", disable_web_page_preview=True)
 
 
-async def settings_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def settings_callback(update: Update):
     """Handle settings button (button11)"""
     query = update.callback_query  # Acknowledge the button press
     await query.answer()
@@ -435,7 +433,7 @@ async def settings_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML", disable_web_page_preview=True)
 
 
-async def close_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def close_callback(update: Update):
     """Handle close button"""
     query = update.callback_query
     await query.answer()
