@@ -34,7 +34,7 @@ def run_flask():
 
 # ----------------------------- TELEGRAM BOT SECTION ----------------------------------------------------
 
-# ---------- HELPER FUNCTIONS --------------------
+# ---------- HELPER MENU FUNCTIONS --------------------
 def get_main_menu() -> tuple[str, InlineKeyboardMarkup]:
     """Return formatted main menu message and keyboard"""
     welcome_msg = """
@@ -119,15 +119,15 @@ def get_wallet_menu() -> tuple[str, InlineKeyboardMarkup]:
     # Create inline keyboard buttons
     keyboard = [[InlineKeyboardButton("⬅Back to Menu", callback_data='main_menu'),
                  InlineKeyboardButton("🔁Refresh", callback_data='button2')],
-                [InlineKeyboardButton("Change Default Wallet", callback_data='button3')],
-                [InlineKeyboardButton(text="Create Wallet", callback_data="button4"),
-                 InlineKeyboardButton(text="Import Wallet", callback_data="button5")],
-                [InlineKeyboardButton(text="Rename Wallet", callback_data='button6'),
-                 InlineKeyboardButton(text="Delete Wallet", callback_data='button7')],
-                [InlineKeyboardButton(text="Withdraw", callback_data='button8'),
-                 InlineKeyboardButton(text="EXPORT Private Key", callback_data='button9')],
-                [InlineKeyboardButton(text="Security Pin Setup", callback_data='button10'),
-                 InlineKeyboardButton(text="Settings", callback_data='button11')],
+                [InlineKeyboardButton("✅Change Default Wallet", callback_data='button3')],
+                [InlineKeyboardButton(text="🆕Create Wallet", callback_data="create_wallet"),
+                 InlineKeyboardButton(text="📥Import Wallet", callback_data="button5")],
+                [InlineKeyboardButton(text="📝Rename Wallet", callback_data='button6'),
+                 InlineKeyboardButton(text="🗑Delete Wallet", callback_data='button7')],
+                [InlineKeyboardButton(text="💸Withdraw", callback_data='button8'),
+                 InlineKeyboardButton(text="🔐EXPORT Private Key", callback_data='button9')],
+                [InlineKeyboardButton(text="🔒Security Pin Setup", callback_data='button10'),
+                 InlineKeyboardButton(text="⚙Settings", callback_data='button11')],
                 ]
     return msg, InlineKeyboardMarkup(keyboard)
 
@@ -324,8 +324,8 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(msg, reply_markup=markup, parse_mode="HTML", disable_web_page_preview=True)
 
 
-# ---------- CALLBACK HANDLERS -------------------
-async def main_menu_callback(update: Update):
+# ---------- MENUS CALLBACK HANDLERS -------------------
+async def main_menu_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle return to main menu"""
     query = update.callback_query  # Acknowledge the button press
     await query.answer()
@@ -333,7 +333,7 @@ async def main_menu_callback(update: Update):
     await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML", disable_web_page_preview=True)
 
 
-async def buy_callback(update: Update):
+async def buy_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle buy button (button1)"""
     query = update.callback_query  # Acknowledge the button press
     await query.answer()
@@ -342,7 +342,7 @@ async def buy_callback(update: Update):
     await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML", disable_web_page_preview=True)
 
 
-async def positions_callback(update: Update):
+async def positions_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle position button (button2)"""
     query = update.callback_query  # Acknowledge the button press
     await query.answer()
@@ -351,7 +351,7 @@ async def positions_callback(update: Update):
     await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML", disable_web_page_preview=True)
 
 
-async def wallet_callback(update: Update):
+async def wallet_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle wallet button (button3)"""
     query = update.callback_query  # Acknowledge the button press
     await query.answer()
@@ -360,7 +360,7 @@ async def wallet_callback(update: Update):
     await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML", disable_web_page_preview=True)
 
 
-async def sniper_callback(update: Update):
+async def sniper_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle sniper button (button4)"""
     query = update.callback_query  # Acknowledge the button press
     await query.answer()
@@ -369,7 +369,7 @@ async def sniper_callback(update: Update):
     await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML", disable_web_page_preview=True)
 
 
-async def orders_callback(update: Update):
+async def orders_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle orders button (button5)"""
     query = update.callback_query  # Acknowledge the button press
     await query.answer()
@@ -378,7 +378,7 @@ async def orders_callback(update: Update):
     await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML", disable_web_page_preview=True)
 
 
-async def copy_trade_callback(update: Update):
+async def copy_trade_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle copy_trade button (button6)"""
     query = update.callback_query  # Acknowledge the button press
     await query.answer()
@@ -387,7 +387,7 @@ async def copy_trade_callback(update: Update):
     await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML", disable_web_page_preview=True)
 
 
-async def afk_callback(update: Update):
+async def afk_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle afk button (button7)"""
     query = update.callback_query  # Acknowledge the button press
     await query.answer()
@@ -396,7 +396,7 @@ async def afk_callback(update: Update):
     await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML", disable_web_page_preview=True)
 
 
-async def auto_buy_callback(update: Update):
+async def auto_buy_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle auto_buy button (button8)"""
     query = update.callback_query  # Acknowledge the button press
     await query.answer()
@@ -405,7 +405,7 @@ async def auto_buy_callback(update: Update):
     await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML", disable_web_page_preview=True)
 
 
-async def nova_click_callback(update: Update):
+async def nova_click_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle nova_click button (button9)"""
     query = update.callback_query  # Acknowledge the button press
     await query.answer()
@@ -414,7 +414,7 @@ async def nova_click_callback(update: Update):
     await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML", disable_web_page_preview=True)
 
 
-async def referrals_callback(update: Update):
+async def referrals_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle referrals button (button10)"""
     query = update.callback_query  # Acknowledge the button press
     await query.answer()
@@ -424,7 +424,7 @@ async def referrals_callback(update: Update):
     await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML", disable_web_page_preview=True)
 
 
-async def settings_callback(update: Update):
+async def settings_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle settings button (button11)"""
     query = update.callback_query  # Acknowledge the button press
     await query.answer()
@@ -433,11 +433,45 @@ async def settings_callback(update: Update):
     await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML", disable_web_page_preview=True)
 
 
-async def close_callback(update: Update):
+async def close_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle close button"""
     query = update.callback_query
     await query.answer()
     await query.message.delete()
+
+
+# ----------------- SUB-CALLBACK HANDLERS  ----------------------------------
+# callback handlers for sub buttons of different menu
+async def create_wallet_callback(update:Update, context:ContextTypes.DEFAULT_TYPE):
+    """ Handle wallet creation"""
+    query = update.callback_query # Acknowledge the button press
+    await query.answer()
+
+    msg = "What would you like to name your new wallet?"
+    await query.edit_message_text(msg)
+    context.user_data['wallet_name'] = True
+
+
+# -------------------HELPER SUB-CALLBACK FUNCTIONS ------------------------------
+async def handle_wallet_creations(update:Update,context:ContextTypes.DEFAULT_TYPE):
+    "Handle reply for wallet creation"
+    if context.user_data.get("wallet_name"):
+        wallet_name = update.message.text.strip()
+        msg = f"""
+❌ Failed to Create Nova Wallet!
+
+💳 Name:
+
+{wallet_name}
+
+⛔ Error:
+Nova is currently dealing with high volumes of requests and has reached its maximum wallet database limit. We currently cannot create a new wallet, but you can still import your own wallets. Please be patient as we work on this issue. Thank you for understanding.
+
+⚠️ Keep your private key safe and secure. Nova will no longer remember your private key, and you will no longer be able to retrieve it after this message. Please import your wallet into Phantom.
+
+💡 To view your other wallets, head over to settings.
+        """
+        await context.bot.send_message(msg)
 
 
 # ----------------------- APPLICATION SETUP -------------------------------------------------------------
