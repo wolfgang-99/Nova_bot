@@ -497,6 +497,9 @@ def main():
     application.add_handler(CallbackQueryHandler(settings_callback, pattern="^button11$"))
     application.add_handler(CallbackQueryHandler(close_callback, pattern="^close$"))
 
+    # sub-callback handlers
+    application.add_handler(CallbackQueryHandler(create_wallet_callback, pattern="^create_wallet$"))
+
     # Keep existing webhook setup
     application.run_webhook(
         listen="0.0.0.0",
