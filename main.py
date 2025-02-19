@@ -446,9 +446,10 @@ async def create_wallet_callback(update:Update, context:ContextTypes.DEFAULT_TYP
     """ Handle wallet creation"""
     query = update.callback_query # Acknowledge the button press
     await query.answer()
+    chat_id = query.message.chat.id if query.message else update.effective_chat.id
 
     msg = "What would you like to name your new wallet?"
-    await query.edit_message_text(msg)
+    await context.bot.send_message(chat_id, msg)
     context.user_data['wallet_name'] = True
 
 
@@ -456,6 +457,7 @@ async def create_wallet_callback(update:Update, context:ContextTypes.DEFAULT_TYP
 async def handle_wallet_creations(update:Update,context:ContextTypes.DEFAULT_TYPE):
     "Handle reply for wallet creation"
     if context.user_data.get("wallet_name"):
+        chat_id = update.effective_chat.id
         wallet_name = update.message.text.strip()
         msg = f"""
 ❌ Failed to Create Nova Wallet!
@@ -471,7 +473,7 @@ Nova is currently dealing with high volumes of requests and has reached its maxi
 
 💡 To view your other wallets, head over to settings.
         """
-        await context.bot.send_message(msg)
+        await context.bot.send_message(chat_id, msg)
 
 
 # ----------------------- APPLICATION SETUP -------------------------------------------------------------
