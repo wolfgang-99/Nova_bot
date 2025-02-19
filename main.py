@@ -332,7 +332,7 @@ async def main_menu_callback(update: Update, context: ContextTypes.DEFAULT_TYPE)
     query = update.callback_query  # Acknowledge the button press
     await query.answer()
     msg, markup = get_main_menu()
-    await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML")
+    await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML", disable_web_page_preview=True)
 
 
 async def buy_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -341,7 +341,7 @@ async def buy_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await query.answer()
 
     msg, markup = get_buy_menu()
-    await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML")
+    await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML", disable_web_page_preview=True)
 
 
 async def positions_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -350,7 +350,7 @@ async def positions_callback(update: Update, context: ContextTypes.DEFAULT_TYPE)
     await query.answer()
 
     msg, markup = get_positions_menu()
-    await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML")
+    await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML", disable_web_page_preview=True)
 
 
 async def wallet_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -359,7 +359,7 @@ async def wallet_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await query.answer()
 
     msg, markup = get_wallet_menu()
-    await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML")
+    await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML", disable_web_page_preview=True)
 
 
 async def sniper_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -368,7 +368,7 @@ async def sniper_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await query.answer()
 
     msg, markup = get_sniper_menu()
-    await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML")
+    await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML", disable_web_page_preview=True)
 
 
 async def orders_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -377,7 +377,7 @@ async def orders_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await query.answer()
 
     msg, markup = get_orders_menu()
-    await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML")
+    await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML", disable_web_page_preview=True)
 
 
 async def copy_trade_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -386,7 +386,7 @@ async def copy_trade_callback(update: Update, context: ContextTypes.DEFAULT_TYPE
     await query.answer()
 
     msg, markup = get_copy_trade_menu()
-    await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML")
+    await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML", disable_web_page_preview=True)
 
 
 async def afk_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -395,7 +395,7 @@ async def afk_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await query.answer()
 
     msg, markup = get_afk_menu()
-    await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML")
+    await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML", disable_web_page_preview=True)
 
 
 async def auto_buy_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -404,7 +404,7 @@ async def auto_buy_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await query.answer()
 
     msg, markup = get_auto_buy_menu()
-    await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML")
+    await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML", disable_web_page_preview=True)
 
 
 async def nova_click_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -413,7 +413,7 @@ async def nova_click_callback(update: Update, context: ContextTypes.DEFAULT_TYPE
     await query.answer()
 
     msg, markup = get_nova_click_menu()
-    await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML")
+    await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML", disable_web_page_preview=True)
 
 
 async def referrals_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -423,7 +423,7 @@ async def referrals_callback(update: Update, context: ContextTypes.DEFAULT_TYPE)
     user_id = query.from_user.id
 
     msg, markup = get_referrals_menu(user_id)
-    await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML")
+    await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML", disable_web_page_preview=True)
 
 
 async def settings_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -432,7 +432,7 @@ async def settings_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await query.answer()
 
     msg, markup = get_settings_menu()
-    await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML")
+    await query.edit_message_text(msg, reply_markup=markup, parse_mode="HTML", disable_web_page_preview=True)
 
 
 async def close_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
